@@ -7,7 +7,7 @@ export const Folder = ({ id, name }) => {
   return (
     <>
       <span>{name}</span>
-      <Link to={"/Todos"} state={{ folder: name }}>
+      <Link to={"/Todos"} state={{ folderId: id, folderName: name }}>
         <button>View Items</button>
       </Link>
       <button onClick={() => context.deleteAction(id)}>Remove</button>

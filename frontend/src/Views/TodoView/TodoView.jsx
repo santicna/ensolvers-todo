@@ -1,48 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { v4 as uuid } from "uuid";
 import todoContext from "../../Components/Todos/TodoContext";
 import { CreateTodo } from "../../Components/Todos/CreateTodo";
 import { TodoList } from "../../Components/Todos/TodoList";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getTodos, addTodo, deleteTodo } from "../../Services/TodosApi";
+import toast, { Toaster } from "react-hot-toast";
 
 export const TodoView = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const folder = location.state.folder;
-  const [todos, setTodos] = useState(() => {
-    const savedTodos = localStorage.getItem(`todos-${folder}`);
+  const folderId = location.state.folderId;
+  const folderName = location.state.folderName;
+  const [todos, setTodos] = useState([]);
 
-    if (savedTodos) {
-      return JSON.parse(savedTodos);
-    } else {
-      return [];
-    }
-  });
+  const getTodosData = async () => {
+    const todosData = await getTodos(folderId);
+    setTodos(todosData.data);
+  };
 
   useEffect(() => {
-    localStorage.setItem(`todos-${folder}`, JSON.stringify(todos));
-  }, [todos]);
+    getTodosData();
+  }, []);
 
-  function addTodo(todo) {
-    if (todo !== "") {
-      setTodos([
-        ...todos,
-        {
-          id: uuid(),
-          text: todo.trim(),
-        },
-      ]);
+  const createNewTodo = async (text) => {
+    if (text !== "") {
+      await addTodo({ text: text, folderId: folderId });
+      getTodosData();
     }
-  }
+  };
 
-  function deleteTodo(id) {
-    const removeItem = todos.filter((todo) => {
-      return todo.id !== id;
-    });
-    setTodos(removeItem);
-  }
+  const removeTodo = async (id) => {
+    await deleteTodo(id);
+    toast("Task deleted");
+    getTodosData();
+  };
+
   return (
-    <todoContext.Provider value={{ folder: folder, deleteTodo: deleteTodo }}>
+    <todoContext.Provider value={{ deleteTodo: removeTodo }}>
       <div className="App">
         <h1>
           <span
@@ -53,10 +47,19 @@ export const TodoView = () => {
           >
             Folders
           </span>{" "}
-          &gt; {folder}
+          &gt; {folderName}
         </h1>
         <TodoList todos={todos} />
-        <CreateTodo addTodo={addTodo} />
+        <CreateTodo addTodo={createNewTodo} />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          }}
+        />
       </div>
     </todoContext.Provider>
   );

@@ -8,10 +8,7 @@ export const Todo = ({ id, text }) => {
     <>
       <input type={"checkbox"} />
       <span>{text}</span>
-      <Link
-        to={"/TodoEdit"}
-        state={{ id: id, text: text, folder: context.folder }}
-      >
+      <Link to={"/TodoEdit"} state={{ id: id, text: text }}>
         <button>Edit</button>
       </Link>
       <button
