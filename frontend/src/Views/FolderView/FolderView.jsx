@@ -3,6 +3,7 @@ import { FolderList } from "../../Components/Folders/FolderList";
 import { CreateFolder } from "../../Components/Folders/CreateFolder";
 import { v4 as uuid } from "uuid";
 import folderContext from "../../Components/Folders/FolderContext";
+import toast, { Toaster } from "react-hot-toast";
 
 export const FolderView = () => {
   const [folders, setFolders] = useState(() => {
@@ -20,7 +21,9 @@ export const FolderView = () => {
   }, [folders]);
 
   function addFolder(name) {
-    if (name !== "") {
+    if (folderExists(name)) {
+      toast("Folder already exists");
+    } else if (name !== "") {
       setFolders([
         ...folders,
         {
@@ -31,7 +34,19 @@ export const FolderView = () => {
     }
   }
 
+  function folderExists(folderName) {
+    var exists = false;
+    folders.forEach((folder) => {
+      if (folder.name == folderName) {
+        console.log("AAAAAAAAAA");
+        exists = true;
+      }
+    });
+    return exists;
+  }
+
   function removeFolder(name, id) {
+    localStorage.removeItem(`todos-${name}`);
     const removeItem = folders.filter((folder) => {
       return folder.id !== id;
     });
@@ -44,6 +59,15 @@ export const FolderView = () => {
         <h1>Folders</h1>
         <FolderList folders={folders} />
         <CreateFolder addFolder={addFolder} />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          }}
+        />
       </div>
     </folderContext.Provider>
   );
