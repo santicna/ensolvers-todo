@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import todoContext from "./TodoContext";
 
 export const Todo = ({ id, text }) => {
@@ -8,7 +9,9 @@ export const Todo = ({ id, text }) => {
     <>
       <input type={"checkbox"} />
       <span>{text}</span>
-      <button>Edit</button>
+      <Link to={"/TodoEdit"}>
+        <button>Edit</button>
+      </Link>
       <button
         onClick={() => {
           context.deleteTodo(id);
