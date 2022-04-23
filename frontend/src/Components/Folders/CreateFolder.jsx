@@ -17,7 +17,7 @@ export const CreateFolder = ({ addFolder }) => {
       />
       <button
         onClick={() => {
-          addFolder(name);
+          addFolder({ name: name });
           setName("");
         }}
       >

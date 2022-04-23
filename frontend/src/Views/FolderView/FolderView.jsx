@@ -1,64 +1,41 @@
 import React, { useEffect, useState } from "react";
 import { FolderList } from "../../Components/Folders/FolderList";
 import { CreateFolder } from "../../Components/Folders/CreateFolder";
-import { v4 as uuid } from "uuid";
 import folderContext from "../../Components/Folders/FolderContext";
 import toast, { Toaster } from "react-hot-toast";
+import { getFolders, addFolder, deleteFolder } from "../../Services/FoldersApi";
 
 export const FolderView = () => {
-  const [folders, setFolders] = useState(() => {
-    const savedFolders = localStorage.getItem("folders");
+  const [folders, setFolders] = useState([]);
 
-    if (savedFolders) {
-      return JSON.parse(savedFolders);
-    } else {
-      return [];
-    }
-  });
+  const getFoldersData = async () => {
+    const foldersData = await getFolders();
+    setFolders(foldersData.data);
+  };
 
   useEffect(() => {
-    localStorage.setItem("folders", JSON.stringify(folders));
-  }, [folders]);
+    getFoldersData();
+  }, []);
 
-  function addFolder(name) {
-    if (folderExists(name)) {
-      toast("Folder already exists");
-    } else if (name !== "") {
-      setFolders([
-        ...folders,
-        {
-          id: uuid(),
-          name: name.trim(),
-        },
-      ]);
+  const createNewFolder = async (name) => {
+    if (name !== "") {
+      await addFolder(name);
+      getFoldersData();
     }
-  }
+  };
 
-  function folderExists(folderName) {
-    var exists = false;
-    folders.forEach((folder) => {
-      if (folder.name == folderName) {
-        console.log("AAAAAAAAAA");
-        exists = true;
-      }
-    });
-    return exists;
-  }
-
-  function removeFolder(name, id) {
-    localStorage.removeItem(`todos-${name}`);
-    const removeItem = folders.filter((folder) => {
-      return folder.id !== id;
-    });
-    setFolders(removeItem);
-  }
+  const removeFolder = async (id) => {
+    await deleteFolder(id);
+    toast("Folder deleted");
+    getFoldersData();
+  };
 
   return (
     <folderContext.Provider value={{ deleteAction: removeFolder }}>
       <div className="App">
         <h1>Folders</h1>
         <FolderList folders={folders} />
-        <CreateFolder addFolder={addFolder} />
+        <CreateFolder addFolder={createNewFolder} />
         <Toaster
           position="bottom-center"
           toastOptions={{

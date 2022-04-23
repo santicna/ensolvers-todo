@@ -3,8 +3,8 @@ import GetRequestHeaders from "./Helpers/GetRequestHeaders";
 
 const foldersEndpoint = "http://localhost:3000/api/folders";
 
-export const addFolder = (folder) => {
-  return axios.post(foldersEndpoint, folder, GetRequestHeaders());
+export const addFolder = (name) => {
+  return axios.post(foldersEndpoint, name, GetRequestHeaders());
 };
 
 export const getFolders = () => {
