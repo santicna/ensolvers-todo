@@ -1,5 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../Data/database.js";
+import Todo from "./Todo.js";
 
 class Folder extends Model {}
 
@@ -15,5 +16,7 @@ Folder.init(
     timestamps: false,
   }
 );
+
+Folder.hasMany(Todo, { onDelete: "CASCADE" });
 
 export default Folder;
