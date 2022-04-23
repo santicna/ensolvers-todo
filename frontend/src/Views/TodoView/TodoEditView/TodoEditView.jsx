@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const TodoEditView = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const id = location.state.id;
   const text = location.state.text;
+  const folder = location.state.folder;
 
   const [newText, setNewText] = useState(text);
-  const todos = JSON.parse(localStorage.getItem("todos"));
+  const todos = JSON.parse(localStorage.getItem(`todos-${folder}`));
 
   function handleInputChange(e) {
     setNewText(e.target.value);
@@ -24,7 +25,7 @@ export const TodoEditView = () => {
       }
       return todo;
     });
-    localStorage.setItem("todos", JSON.stringify(editItem));
+    localStorage.setItem(`todos-${folder}`, JSON.stringify(editItem));
   }
   return (
     <>

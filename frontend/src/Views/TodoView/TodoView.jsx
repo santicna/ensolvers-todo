@@ -41,7 +41,7 @@ export const TodoView = () => {
     setTodos(removeItem);
   }
   return (
-    <todoContext.Provider value={{ deleteTodo: deleteTodo }}>
+    <todoContext.Provider value={{ folder: folder, deleteTodo: deleteTodo }}>
       <div className="App">
         <h1>Folders &gt; {folder}</h1>
         <TodoList todos={todos} />
