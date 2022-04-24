@@ -4,9 +4,9 @@ import { Folder } from "./Folder";
 export const FolderList = ({ folders }) => {
   return (
     <>
-      <ul className="folders-list">
+      <ul className="item-list">
         {folders.map((folder) => (
-          <li key={folder.id}>
+          <li className="folder-item" key={folder.id}>
             <Folder id={folder.id} name={folder.name} />
           </li>
         ))}

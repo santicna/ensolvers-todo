@@ -7,7 +7,7 @@ export const CreateFolder = ({ addFolder }) => {
   }
 
   return (
-    <>
+    <div className="create-container">
       <input
         name="name"
         type="text"
@@ -23,6 +23,6 @@ export const CreateFolder = ({ addFolder }) => {
       >
         Add
       </button>
-    </>
+    </div>
   );
 };

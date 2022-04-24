@@ -7,7 +7,7 @@ export const CreateTodo = ({ addTodo }) => {
     setTodo(e.target.value);
   }
   return (
-    <>
+    <div className="create-container">
       <input
         name="todo"
         type="text"
@@ -23,6 +23,6 @@ export const CreateTodo = ({ addTodo }) => {
       >
         Add
       </button>
-    </>
+    </div>
   );
 };

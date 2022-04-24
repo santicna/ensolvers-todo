@@ -33,18 +33,20 @@ export const FolderView = () => {
   return (
     <folderContext.Provider value={{ deleteAction: removeFolder }}>
       <div className="App">
-        <h1>Folders</h1>
-        <FolderList folders={folders} />
-        <CreateFolder addFolder={createNewFolder} />
-        <Toaster
-          position="bottom-center"
-          toastOptions={{
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-          }}
-        />
+        <div>
+          <h1>Folders</h1>
+          <FolderList folders={folders} />
+          <CreateFolder addFolder={createNewFolder} />
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              style: {
+                background: "#363636",
+                color: "#fff",
+              },
+            }}
+          />
+        </div>
       </div>
     </folderContext.Provider>
   );

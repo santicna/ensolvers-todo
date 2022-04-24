@@ -38,28 +38,30 @@ export const TodoView = () => {
   return (
     <todoContext.Provider value={{ deleteTodo: removeTodo }}>
       <div className="App">
-        <h1>
-          <span
-            onClick={() => {
-              navigate(-1);
+        <div>
+          <h1>
+            <span
+              onClick={() => {
+                navigate(-1);
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Folders
+            </span>{" "}
+            &gt; {folderName}
+          </h1>
+          <TodoList todos={todos} />
+          <CreateTodo addTodo={createNewTodo} />
+          <Toaster
+            position="bottom-center"
+            toastOptions={{
+              style: {
+                background: "#363636",
+                color: "#fff",
+              },
             }}
-            style={{ cursor: "pointer" }}
-          >
-            Folders
-          </span>{" "}
-          &gt; {folderName}
-        </h1>
-        <TodoList todos={todos} />
-        <CreateTodo addTodo={createNewTodo} />
-        <Toaster
-          position="bottom-center"
-          toastOptions={{
-            style: {
-              background: "#363636",
-              color: "#fff",
-            },
-          }}
-        />
+          />
+        </div>
       </div>
     </todoContext.Provider>
   );
