@@ -1,0 +1,26 @@
+{
+  "name": "ensolvers-todo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm install && concurrently \"npm start --prefix Backend\" \"npm start --prefix frontend\" ",
+    "start-backend": "npm start --prefix Backend",
+    "start-frontend": "npm start --prefix Frontend",
+    "postinstall": "cd frontend && npm install && cd.. && cd Backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santicna/ensolvers-todo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/santicna/ensolvers-todo/issues"
+  },
+  "homepage": "https://github.com/santicna/ensolvers-todo#readme",
+  "dependencies": {
+    "concurrently": "^7.1.0"
+  }
+}
