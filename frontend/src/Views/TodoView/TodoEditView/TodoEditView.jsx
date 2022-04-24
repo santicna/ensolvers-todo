@@ -32,6 +32,7 @@ export const TodoEditView = () => {
           modifyTodoText(id, newText);
           navigate(-1);
         }}
+        style={{ margin: "10px" }}
       >
         Save
       </button>
